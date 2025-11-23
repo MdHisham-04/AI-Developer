@@ -45,14 +45,14 @@ uv syncOr using pip:
 pip install -r requirements.txt3. Create a `.env` file in the project root:
 GROQ_API_KEY=your_groq_api_key_here## 💻 Usage
 
-### Running the Web Interface
+## Running the Web Interface
 
-Start the Streamlit web application:
+To start the Streamlit web application, run:
+``bash
+streamlit run main.py
 
-streamlit run main.pyThen:
+## How to Use
 1. Enter your project description in the text area
-2. Click "🚀 Generate Code"
+2. Click "Generate Code"
 3. Wait for the agent to complete (may take 1-2 minutes)
 4. View generated files and download as ZIP
-
-### Example Prompts
