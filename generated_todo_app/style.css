@@ -1,0 +1,274 @@
+/*
+   style.css – Visual design and responsive layout for ColorfulTodo app
+   Implements theming, reset, layout, item styling, animations, and responsive tweaks.
+*/
+
+/* 1. CSS Custom Properties for Theming */
+:root {
+    /* Primary accent color – can be overridden by JS via document.documentElement.style.setProperty */
+    --primary-color: #ff6f61;   /* default matches the color picker value */
+    --bg-color: #f9fafb;
+    --text-color: #333333;
+    --muted-text-color: #777777;
+    --border-radius: 0.5rem;
+    --transition-duration: 0.2s;
+    --font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --max-width: 600px;
+}
+
+/* 2. Global Reset & Base Typography */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: background-color var(--transition-duration), transform var(--transition-duration);
+}
+
+button:hover,
+button:focus {
+    background-color: darken(var(--primary-color), 10%);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+input, textarea {
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text-color);
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+    transition: border-color var(--transition-duration);
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+/* 3. Layout – Center .todo-app */
+.todo-app {
+    background: #fff;
+    width: 100%;
+    max-width: var(--max-width);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Input Section */
+.input-section {
+    display: flex;
+    gap: 0.5rem;
+}
+
+#new-todo {
+    flex: 1;
+}
+
+#add-btn {
+    flex-shrink: 0;
+}
+
+/* Todo List */
+.todo-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0;
+    margin: 0;
+}
+
+.todo-item {
+    background: #fafafa;
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    transition: background-color var(--transition-duration), transform var(--transition-duration), box-shadow var(--transition-duration);
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.todo-item:hover {
+    background: #f0f0f0;
+}
+
+.todo-text {
+    flex: 1;
+    word-break: break-word;
+}
+
+/* Action Buttons */
+.todo-actions {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+}
+
+.edit-btn,
+.delete-btn {
+    background: transparent;
+    color: var(--muted-text-color);
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    font-size: 0.9rem;
+    transition: color var(--transition-duration);
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+    color: var(--primary-color);
+}
+
+.complete-checkbox {
+    width: 1rem;
+    height: 1rem;
+    accent-color: var(--primary-color);
+}
+
+/* Filters */
+.filters {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background: #e0e0e0;
+    color: var(--text-color);
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    transition: background-color var(--transition-duration);
+}
+
+.filter-btn.active {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+.filter-btn:hover {
+    background: #d5d5d5;
+}
+
+/* Theme Picker */
+.theme-picker {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+/* 5. Completed tasks */
+.completed .todo-text {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+/* 6. Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideOut {
+    from { opacity: 1; height: auto; margin: 0.75rem 0; }
+    to { opacity: 0; height: 0; margin: 0; }
+}
+
+.todo-item.removing {
+    animation: slideOut 0.3s ease forwards;
+}
+
+/* Drag shadow – to be toggled via JS (e.g., adding .dragging class) */
+.todo-item.dragging {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    transform: scale(1.02);
+    cursor: grabbing;
+}
+
+/* 7. Media Queries for Mobile */
+@media (max-width: 480px) {
+    .todo-app {
+        padding: 1rem;
+    }
+    h1 {
+        font-size: 1.5rem;
+    }
+    button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+    .input-section {
+        flex-direction: column;
+    }
+    #add-btn {
+        width: 100%;
+    }
+    .filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .filter-btn {
+        width: 100%;
+    }
+    .theme-picker {
+        flex-direction: column;
+    }
+}
+
+/* 8. Exported class names – already defined above */
+
+/* 9. Ensure JS can override primary color – custom property defined at :root */
+
+/* Utility: darken function fallback for browsers that don’t support CSS color functions */
+@supports not (color: darken(var(--primary-color), 10%)) {
+    button:hover,
+    button:focus {
+        background-color: #e0554a; /* fallback darkened version of default primary */
+    }
+}

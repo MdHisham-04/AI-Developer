@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ColorfulTodo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="todo-app">
+        <h1>ColorfulTodo</h1>
+        <section class="input-section">
+            <input id="new-todo" type="text" placeholder="What needs to be done?" autocomplete="off">
+            <button id="add-btn">Add</button>
+        </section>
+        <ul id="todo-list" class="todo-list">
+            <!-- Todo items will be injected here -->
+        </ul>
+        <div class="filters">
+            <button data-filter="all" class="filter-btn active">All</button>
+            <button data-filter="active" class="filter-btn">Active</button>
+            <button data-filter="completed" class="filter-btn">Completed</button>
+        </div>
+        <div class="theme-picker">
+            <input type="color" id="primary-color" value="#ff6f61">
+            <label for="primary-color">Primary Color</label>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
